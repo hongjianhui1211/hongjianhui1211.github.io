@@ -222,7 +222,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/10/hexo上传图片/">hexo上传图片</a>
+      <a class="article-title" href="/2019/10/10/hexo上传图片/">hexo把图片部署到github</a>
     </h1>
   
 
@@ -235,18 +235,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="前提在本机安装hexo-cli"><a href="#前提在本机安装hexo-cli" class="headerlink" title="前提在本机安装hexo-cli"></a>前提在本机安装hexo-cli</h3><p><a href="https://hexo.io/zh-cn/docs/commands" target="_blank" rel="noopener">可以参考</a></p>
+        <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>1、在本机安装hexo-cli<br>可以参考<a href="https://hexo.io/zh-cn/docs/commands" target="_blank" rel="noopener">hexo-cli</a><br>2、到博客的根目录下执行 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>进行插件的安装。</p>
 <h3 id="先new一个-md文件"><a href="#先new一个-md文件" class="headerlink" title="先new一个.md文件"></a>先new一个.md文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"测试"</span></span><br></pre></td></tr></table></figure>
 
 <p>生成的文件会在E:\blog\source_posts这里</p>
-<h3 id="打开测试-md文件"><a href="#打开测试-md文件" class="headerlink" title="打开测试.md文件"></a>打开测试.md文件</h3><p>在里面添加这个格式:<img src="//hongjianhui1211.github.io/2019/10/10/hexo上传图片/%22%E5%9B%BE%E7%89%87%E5%90%8D%22.jpg" alt="&quot;图片名&quot;"></p>
+<h3 id="打开测试-md文件"><a href="#打开测试-md文件" class="headerlink" title="打开测试.md文件"></a>打开测试.md文件</h3><p>在里面添加这个格式:<br><img src="//hongjianhui1211.github.io/2019/10/10/hexo上传图片/g.png" alt="g"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<p>这时候就会生成这个文件<br><img src="//hongjianhui1211.github.io/2019/10/10/hexo上传图片/p.png" alt="p"><br>再把你的图片复制到这个文件里E:\blog\public\2019\10\10\测试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
+<p>这时候就会生成这个文件<br>再把你的图片复制到这个文件里E:\blog\public\2019\10\10\测试<br><img src="//hongjianhui1211.github.io/2019/10/10/hexo上传图片/p.png" alt="p"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 
