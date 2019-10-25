@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://hongjianhui1211.github.io">
-  <title>位移 | 欢迎</title>
+  <title>位移运算 | 欢迎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言1、一个十进制的数以补码的形式存在计算机内存中2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差">
+  <meta name="description" content="计算机基础知识1、一个十进制的数以补码的形式存在计算机内存中2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差 走进0于1的世界如何表示正负呢？答：最左侧的一位是0表示正数，1表示负数，不参与数值表示，所以范围为-128~127。  正数：补码、原码，反码都一样负数：补码等于反码加1&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="位移">
+<meta property="og:title" content="位移运算">
 <meta property="og:url" content="https://hongjianhui1211.github.io/2019/10/24/位移/index.html">
 <meta property="og:site_name" content="欢迎">
-<meta property="og:description" content="前言1、一个十进制的数以补码的形式存在计算机内存中2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差">
+<meta property="og:description" content="计算机基础知识1、一个十进制的数以补码的形式存在计算机内存中2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差 走进0于1的世界如何表示正负呢？答：最左侧的一位是0表示正数，1表示负数，不参与数值表示，所以范围为-128~127。  正数：补码、原码，反码都一样负数：补码等于反码加1&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-24T15:20:30.130Z">
+<meta property="og:updated_time" content="2019-10-25T09:05:58.251Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="位移">
-<meta name="twitter:description" content="前言1、一个十进制的数以补码的形式存在计算机内存中2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差">
+<meta name="twitter:title" content="位移运算">
+<meta name="twitter:description" content="计算机基础知识1、一个十进制的数以补码的形式存在计算机内存中2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差 走进0于1的世界如何表示正负呢？答：最左侧的一位是0表示正数，1表示负数，不参与数值表示，所以范围为-128~127。  正数：补码、原码，反码都一样负数：补码等于反码加1&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;">
   
     <link rel="alternative" href="/atom.xml" title="欢迎" type="application/atom+xml">
   
@@ -161,7 +161,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      位移
+      位移运算
     </h1>
   
 
@@ -174,7 +174,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>1、一个十进制的数以补码的形式存在计算机内存中<br>2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差</p>
+        <h2 id="计算机基础知识"><a href="#计算机基础知识" class="headerlink" title="计算机基础知识"></a>计算机基础知识</h2><p>1、一个十进制的数以补码的形式存在计算机内存中<br>2、计算机在计算10进制小数的过程中要先转为2进制进行计算，2进制小数无法精确的表达10进制小数存在误差</p>
+<h3 id="走进0于1的世界"><a href="#走进0于1的世界" class="headerlink" title="走进0于1的世界"></a>走进0于1的世界</h3><p>如何表示正负呢？<br>答：最左侧的一位是0表示正数，1表示负数，不参与数值表示，所以范围为-128~127。</p>
+<hr>
+<p>正数：补码、原码，反码都一样<br>负数：补码等于反码加1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  00100011(35)<br>&nbsp;&nbsp; +11011101(-35,负数：最左1位表示负，右7位值取反+1)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00000000</p>
+<h3 id="既熟悉又陌生的位移运算"><a href="#既熟悉又陌生的位移运算" class="headerlink" title="既熟悉又陌生的位移运算"></a>既熟悉又陌生的位移运算</h3><p><strong>左移&lt;&lt;1</strong></p>
+<ul>
+<li>左截一位，右补个0</li>
+</ul>
+<hr>
+<p><strong>右移&gt;&gt;1</strong></p>
+<ul>
+<li>正数：右截一位，左补个0，近似除以2 </li>
+<li>负数：右截一位，左补个1</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">正数/负数</th>
+<th align="center">向左移&lt;&lt;1位</th>
+<th align="center">向右移&gt;&gt;1位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">99（01100011）</td>
+<td align="center">11000110=-58</td>
+<td align="center">00110001=49（近似除以2）</td>
+</tr>
+<tr>
+<td align="center">-99（10011101）</td>
+<td align="center">00111010=58</td>
+<td align="center">11001110=-50</td>
+</tr>
+</tbody></table>
 
       
 
