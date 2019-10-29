@@ -172,18 +172,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="StringTable特性"><a href="#StringTable特性" class="headerlink" title="StringTable特性"></a>StringTable特性</h2><ul>
+        <h2 id="1、StringTable特性"><a href="#1、StringTable特性" class="headerlink" title="1、StringTable特性"></a>1、StringTable特性</h2><ul>
 <li>常量池中的字符串仅是符号，第一次用到时才变为对象</li>
 <li>利用串池的机制来避免重复创建字符串对面</li>
 <li>字符串变量拼接的原理是StringBuilder（jdk1.8）<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       String s1 = <span class="string">"a"</span>; // 懒惰的</span><br><span class="line">       String s2 = <span class="string">"b"</span>;</span><br><span class="line">       String s3 = <span class="string">"ab"</span>;</span><br><span class="line">       String s4 = s1 + s2; // new StringBuilder().append(<span class="string">"a"</span>).append(<span class="string">"b"</span>).toString()  new String(<span class="string">"ab"</span>)。是s1和s2是变量，运行期间用动态拼接</span><br><span class="line">       String s5 = <span class="string">"a"</span> + <span class="string">"b"</span>;  // javac 在编译期间的优化，结果已经在编译期确定为ab。a，b是常量，编译期间确定结果</span><br><span class="line">       System.out.println(s3 == s4);//s4在堆里面<span class="literal">false</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-<p>用javap -v反编译结果<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png" alt="fby"></p>
+<p>第5行是用javap -v反编译结果<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png" alt="fby"><br><strong>可见是用StringBuilder拼接的</strong></p>
 <ul>
 <li>字符串常量拼接的原理是编译期优化</li>
 <li>可以使用intern方法，主动将串池中还没有的字符串对象放入串池</li>
 </ul>
+<h2 id="2、StringTable性能调优"><a href="#2、StringTable性能调优" class="headerlink" title="2、StringTable性能调优"></a>2、StringTable性能调优</h2><ul>
+<li><p>调整桶的个数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ -XX:StringTableSize=个数</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>intern 减少内存占用<br>循环十次40多万行的”linux.words”文件，用jvisualvm工具监测</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException &#123;</span><br><span class="line">       List&lt;String&gt; address = new ArrayList&lt;&gt;();</span><br><span class="line">       System.in.read();</span><br><span class="line">       <span class="keyword">for</span> (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">           try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(<span class="string">"linux.words"</span>), <span class="string">"utf-8"</span>))) &#123;</span><br><span class="line">               String line = null;</span><br><span class="line">               long start = System.nanoTime();</span><br><span class="line">               <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                   line = reader.readLine();</span><br><span class="line">                   <span class="keyword">if</span>(line == null) &#123;</span><br><span class="line">                       <span class="built_in">break</span>;</span><br><span class="line">                   &#125;</span><br><span class="line">                   //address.add(line);//没入池</span><br><span class="line">                   address.add(line.intern());</span><br><span class="line">               &#125;</span><br><span class="line">               System.out.println(<span class="string">"cost:"</span> +(System.nanoTime()-start)/1000000);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       System.in.read();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>运行前<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/yxq.png" alt="yxq"><br>没入池时占用内存300Mb<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/mrc.png" alt="mrc"><br>入池时占用内存30Mb<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/rc.png" alt="rc"></p>
 
       
 
