@@ -152,6 +152,80 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JVM-StringTable" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/JVM-StringTable/">JVM-StringTable</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/29/JVM-StringTable/" class="archive-article-date">
+  	<time datetime="2019-10-29T03:52:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="StringTable特性"><a href="#StringTable特性" class="headerlink" title="StringTable特性"></a>StringTable特性</h2><ul>
+<li>常量池中的字符串仅是符号，第一次用到时才变为对象</li>
+<li>利用串池的机制来避免重复创建字符串对面</li>
+<li>字符串变量拼接的原理是StringBuilder（jdk1.8）<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       String s1 = <span class="string">"a"</span>; // 懒惰的</span><br><span class="line">       String s2 = <span class="string">"b"</span>;</span><br><span class="line">       String s3 = <span class="string">"ab"</span>;</span><br><span class="line">       String s4 = s1 + s2; // new StringBuilder().append(<span class="string">"a"</span>).append(<span class="string">"b"</span>).toString()  new String(<span class="string">"ab"</span>)。是s1和s2是变量，运行期间用动态拼接</span><br><span class="line">       String s5 = <span class="string">"a"</span> + <span class="string">"b"</span>;  // javac 在编译期间的优化，结果已经在编译期确定为ab。a，b是常量，编译期间确定结果</span><br><span class="line">       System.out.println(s3 == s4);//s4在堆里面<span class="literal">false</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>用javap -v反编译结果<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png" alt="fby"></p>
+<ul>
+<li>字符串常量拼接的原理是编译期优化</li>
+<li>可以使用intern方法，主动将串池中还没有的字符串对象放入串池</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/JVM-StringTable/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-位移" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

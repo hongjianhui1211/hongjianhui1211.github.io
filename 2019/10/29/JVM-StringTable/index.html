@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://hongjianhui1211.github.io">
-  <title>Archives: 2019 | 欢迎</title>
+  <title>JVM-StringTable | 欢迎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="欢迎">
-<meta property="og:url" content="https://hongjianhui1211.github.io/archives/2019/index.html">
+  <meta name="description" content="StringTable特性 常量池中的字符串仅是符号，第一次用到时才变为对象 利用串池的机制来避免重复创建字符串对面 字符串变量拼接的原理是StringBuilder（jdk1.8）12345678public static void main(String[] args) &amp;#123;       String s1 = &quot;a&quot;; // 懒惰的       String s2 = &quot;b&quot;;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM-StringTable">
+<meta property="og:url" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/index.html">
 <meta property="og:site_name" content="欢迎">
+<meta property="og:description" content="StringTable特性 常量池中的字符串仅是符号，第一次用到时才变为对象 利用串池的机制来避免重复创建字符串对面 字符串变量拼接的原理是StringBuilder（jdk1.8）12345678public static void main(String[] args) &amp;#123;       String s1 = &quot;a&quot;; // 懒惰的       String s2 = &quot;b&quot;;">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png">
+<meta property="og:updated_time" content="2019-10-29T04:13:10.770Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="欢迎">
+<meta name="twitter:title" content="JVM-StringTable">
+<meta name="twitter:description" content="StringTable特性 常量池中的字符串仅是符号，第一次用到时才变为对象 利用串池的机制来避免重复创建字符串对面 字符串变量拼接的原理是StringBuilder（jdk1.8）12345678public static void main(String[] args) &amp;#123;       String s1 = &quot;a&quot;; // 懒惰的       String s2 = &quot;b&quot;;">
+<meta name="twitter:image" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png">
   
     <link rel="alternative" href="/atom.xml" title="欢迎" type="application/atom+xml">
   
@@ -150,130 +156,167 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-JVM-StringTable" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      JVM-StringTable
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/JVM-StringTable/" class="archive-article-date">
+
+        
+        <a href="/2019/10/29/JVM-StringTable/" class="archive-article-date">
   	<time datetime="2019-10-29T03:52:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/JVM-StringTable/">JVM-StringTable</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="StringTable特性"><a href="#StringTable特性" class="headerlink" title="StringTable特性"></a>StringTable特性</h2><ul>
+<li>常量池中的字符串仅是符号，第一次用到时才变为对象</li>
+<li>利用串池的机制来避免重复创建字符串对面</li>
+<li>字符串变量拼接的原理是StringBuilder（jdk1.8）<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       String s1 = <span class="string">"a"</span>; // 懒惰的</span><br><span class="line">       String s2 = <span class="string">"b"</span>;</span><br><span class="line">       String s3 = <span class="string">"ab"</span>;</span><br><span class="line">       String s4 = s1 + s2; // new StringBuilder().append(<span class="string">"a"</span>).append(<span class="string">"b"</span>).toString()  new String(<span class="string">"ab"</span>)。是s1和s2是变量，运行期间用动态拼接</span><br><span class="line">       String s5 = <span class="string">"a"</span> + <span class="string">"b"</span>;  // javac 在编译期间的优化，结果已经在编译期确定为ab。a，b是常量，编译期间确定结果</span><br><span class="line">       System.out.println(s3 == s4);//s4在堆里面<span class="literal">false</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+</li>
+</ul>
+<p>用javap -v反编译结果<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png" alt="fby"></p>
+<ul>
+<li>字符串常量拼接的原理是编译期优化</li>
+<li>可以使用intern方法，主动将串池中还没有的字符串对象放入串池</li>
+</ul>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/24/位移/" class="archive-article-date">
-  	<time datetime="2019-10-24T14:58:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-24</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/24/位移/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">位移运算</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/24/位移/">位移运算</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/10/hexo上传图片/" class="archive-article-date">
-  	<time datetime="2019-10-10T11:02:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/10/hexo上传图片/">hexo把图片部署到github</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/05/hello-world/" class="archive-article-date">
-  	<time datetime="2019-10-05T04:07:53.794Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/05/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -296,8 +339,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
