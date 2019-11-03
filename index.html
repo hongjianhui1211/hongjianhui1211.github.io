@@ -159,7 +159,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/03/Java-OOP/">Java-OOP</a>
+      <a class="article-title" href="/2019/11/03/Java-OOP/">Java</a>
     </h1>
   
 
@@ -176,6 +176,107 @@
 <h3 id="2、封装"><a href="#2、封装" class="headerlink" title="2、封装"></a>2、封装</h3><p>封装使面向对象的世界变得单纯，对象之间的关系变得简单，各人自扫门前雪，耦合度变弱，有利于维护。</p>
 <h3 id="3、继承"><a href="#3、继承" class="headerlink" title="3、继承"></a>3、继承</h3><p>继承把枯燥的代码世界变得更有层次感，更有扩展性，为多态打下基础语法。</p>
 <h3 id="4、多态"><a href="#4、多态" class="headerlink" title="4、多态"></a>4、多态</h3><p>多态是面向对象天空中最绚丽的礼花，提升了对象的扩展能力和运行时丰富想象力。<br><strong>4.1重载（overload）</strong><br>重载是一个类中多态的一种表现，只要方法名一致，但是每个方法具有不同的参数列表，方法的返回类型和修饰类型可以不同<br><strong>4.2重写（overriding）</strong><br>1、“两小”：子类方法的返回值类型和抛出的异常均应小于等于父类方法<br>2、“两同”：子类方法的方法名、参数列表均应与父类相同<br>3、“一大”：子类方法的访问权限应大于父类</p>
+<hr>
+<h2 id="接口-amp-抽象类"><a href="#接口-amp-抽象类" class="headerlink" title="接口&amp;抽象类"></a>接口&amp;抽象类</h2><table>
+<thead>
+<tr>
+<th align="center">语法维度</th>
+<th align="center">抽象类</th>
+<th align="center">接口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">定义关键字</td>
+<td align="center">abstract</td>
+<td align="center">interface</td>
+</tr>
+<tr>
+<td align="center">子类继承或实现父类关键字</td>
+<td align="center">extends</td>
+<td align="center">implements</td>
+</tr>
+<tr>
+<td align="center">方法实现</td>
+<td align="center">可以有</td>
+<td align="center">不能有，但在jdk8及之后，允许有default实现</td>
+</tr>
+<tr>
+<td align="center">方法访问控制符</td>
+<td align="center">无限制</td>
+<td align="center">有限制，默认public static abstract</td>
+</tr>
+<tr>
+<td align="center">属性访问控制符</td>
+<td align="center">无限制</td>
+<td align="center">有限制，默认public static final</td>
+</tr>
+<tr>
+<td align="center">静态方法</td>
+<td align="center">可以有</td>
+<td align="center">不能有</td>
+</tr>
+<tr>
+<td align="center">static{}静态代码块</td>
+<td align="center">可以有</td>
+<td align="center">不能有</td>
+</tr>
+<tr>
+<td align="center">本类型之间扩展</td>
+<td align="center">单继承</td>
+<td align="center">多继承</td>
+</tr>
+<tr>
+<td align="center">本类型之间扩展关键字</td>
+<td align="center">extends</td>
+<td align="center"><font color="red">extends</font>（类implements接口）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="访问权限控制"><a href="#访问权限控制" class="headerlink" title="访问权限控制"></a>访问权限控制</h2><table>
+<thead>
+<tr>
+<th align="center">访问权限控制控制符</th>
+<th align="center">任何地方</th>
+<th align="center">包外子类</th>
+<th align="center">包内</th>
+<th align="center">类内</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">public</td>
+<td align="center">OK</td>
+<td align="center">OK</td>
+<td align="center">OK</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td align="center">protected</td>
+<td align="center">NO</td>
+<td align="center">OK</td>
+<td align="center">OK</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td align="center">无</td>
+<td align="center">NO</td>
+<td align="center">NO</td>
+<td align="center">OK</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td align="center">private</td>
+<td align="center">NO</td>
+<td align="center">NO</td>
+<td align="center">NO</td>
+<td align="center">OK</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>public</strong> :可以修饰外部类、属性、方法，被其修饰不仅可以被包内访问，还可以跨类、跨包访问，甚至允许跨工程访问</li>
+<li><strong>protected</strong> : 只能修饰属性和方法，被其修饰能被包内及包外子类访问</li>
+<li><strong>无</strong> : 仅对包内可见，这里是无修饰符不是default eg：void nonoMethod(){}</li>
+<li><strong>private</strong> : 只能修饰属性、方法和内部类，表示“私有的”</li>
+</ul>
 
       
 
