@@ -16,10 +16,9 @@
 <meta property="og:description" content="1、StringTable特性 常量池中的字符串仅是符号，第一次用到时才变为对象 利用串池的机制来避免重复创建字符串对面 字符串变量拼接的原理是StringBuilder（jdk1.8）12345678public static void main(String[] args) &amp;#123;       String s1 = &quot;a&quot;; // 懒惰的       String s2 = &quot;b&quot;;">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/fby.png">
-<meta property="og:image" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/yxq.png">
 <meta property="og:image" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/mrc.png">
 <meta property="og:image" content="https://hongjianhui1211.github.io/2019/10/29/JVM-StringTable/rc.png">
-<meta property="og:updated_time" content="2019-10-29T05:06:38.017Z">
+<meta property="og:updated_time" content="2019-11-03T07:35:01.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM-StringTable">
 <meta name="twitter:description" content="1、StringTable特性 常量池中的字符串仅是符号，第一次用到时才变为对象 利用串池的机制来避免重复创建字符串对面 字符串变量拼接的原理是StringBuilder（jdk1.8）12345678public static void main(String[] args) &amp;#123;       String s1 = &quot;a&quot;; // 懒惰的       String s2 = &quot;b&quot;;">
@@ -201,7 +200,7 @@
 
 </li>
 </ul>
-<p>运行前<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/yxq.png" alt="yxq"></p>
+<p>运行前<br>![yxq](yxq.png =100x100)</p>
 <hr>
 <p>没入池时占用内存300Mb<br><img src="//hongjianhui1211.github.io/2019/10/29/JVM-StringTable/mrc.png" alt="mrc"></p>
 <hr>
